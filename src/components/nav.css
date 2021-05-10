@@ -1,0 +1,24 @@
+.navbar{
+  display: flex;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  margin: 1em;
+  padding: 1em 3em;
+}
+
+input[type=text]{
+  padding: 0.2em;
+}
+
+
+.nav-btn{
+  margin-right: 2em;
+  padding: 0.2em 1em;
+  cursor: pointer;
+}
+
+.nav-btn.autoslide{
+  margin-left: auto;
+}
+

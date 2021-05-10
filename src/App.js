@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState, useEffect} from 'react'
+import Carousel from './components/Carousel'
+import { getPixaImages } from './helper/getPixaImages'
+import Nav from './components/Nav'
+import './App.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const [imagesInfo, setImagesInfo] = useState([])
+
+const [search, setSearch] = useState('flower')
+const [loading, setLoading] = useState(true)
+const [autoSlide, setAutoSlide] = useState(false)
+
+const resultImages = async () => {
+  setLoading(true)
+  const result =  await getPixaImages(search)
+  setImagesInfo(result)
+  setLoading(false)
 }
 
-export default App;
+useEffect(()=>{
+  resultImages()
+},[])
+
+  return (
+    <>
+      <Nav resultImages = {resultImages} setSearch={setSearch} setAutoSlide={setAutoSlide} autoSlide={autoSlide}/>
+      <section className='carousel-wrapper'>
+        <Carousel 
+          imagesInfo={imagesInfo} 
+          loading={loading} 
+          search={search} 
+          autoSlide={autoSlide}
+        />
+      </section>
+      <footer>
+        <p>Norvillie Villaruel</p>
+        <p>React Custom Carousel Powered by pixabay</p>
+        <p>norvillie.villaruel@gmail.com</p>
+        <p>Full Stack Web Developer 2021</p>
+      </footer>
+    </>
+  )
+}
+
+export default App
